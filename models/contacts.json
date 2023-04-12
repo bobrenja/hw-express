@@ -1,23 +1,5 @@
 [
   {
-    "contactId": "vza2RIzNGIwutCVCs4mCL",
-    "name": "Kennedy2 Lane",
-    "email": "Cras@nonenimMauris.net",
-    "phone": "(542) 451-7038"
-  },
-  {
-    "contactId": "05olLMgyVQdWRwgKfg5J6",
-    "name": "Kennedy4 Lane",
-    "email": "Cras@nonenimMauris.net",
-    "phone": "(542) 451-7038"
-  },
-  {
-    "id": "1DEXoP8AuCGYc1YgoQ6hw",
-    "name": "Abbot Franks",
-    "email": "scelerisque@magnis.org",
-    "phone": "(186) 568-3720"
-  },
-  {
     "id": "Z5sbDlS7pCzNsnAHLtDJd",
     "name": "Reuben Henry",
     "email": "pharetra.ut@dictum.co.uk",
@@ -25,9 +7,9 @@
   },
   {
     "id": "C9sjBfCo4UJCWjzBnOtxl",
-    "name": "Simon Morton",
-    "email": "dui.Fusce.diam@Donec.com",
-    "phone": "(233) 738-2360"
+    "name": "Kennedy4 Lane",
+    "email": "Cras@nonenimMauris.net",
+    "phone": "(542) 451-7038"
   },
   {
     "id": "e6ywwRe4jcqxXfCZOj_1e",
