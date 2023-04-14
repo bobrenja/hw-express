@@ -6,7 +6,6 @@ const errorMessage = {
     404: "Not Found",
     409: "Conflict"
 }
-
 const HttpError = (status, message = errorMessage[status]) => {
   const error = new Error(message);
   error.status = status;
