@@ -1,0 +1,103 @@
+const Joi = require('joi');
+
+const {
+  getContacts,
+  getContactById,
+  removeContact,
+  addContact,
+  updateContact,
+} = require('../models/contacts');
+
+const { HttpError } = require('../models/helpers');
+
+const addSchema = Joi.object({
+  name: Joi.string().required().messages({
+    'any.required': `"name" is required`,
+  }),
+  email: Joi.string().required().messages({
+    'any.required': `"email" is required`,
+    'string.empty': `"email" cannot be empty`,
+    'string.base': `"email" must be string`,
+  }),
+  phone: Joi.string().required().messages({
+    'any.required': `"phone" is required`,
+  }),
+  // Joi.string().pattern(//)
+});
+
+const getAllContacts = async (req, res, next) => {
+  try {
+    const data = await getContacts();
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getIdContact = async (req, res, next) => {
+  try {
+    const { contactId } = req.params;
+    const data = await getContactById(contactId);
+    if (!data) {
+      throw HttpError(404, `Contact with ${contactId} not found`);
+    }
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const addOneContact = async (req, res, next) => {
+  try {
+    const { error } = addSchema.validate(req.body);
+    if (error) {
+      throw HttpError(400, error.message);
+    }
+    const data = await addContact(req.body);
+    res.status(201).json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const removeOneContact = async (req, res, next) => {
+  try {
+    const { contactId } = req.params;
+    const data = await removeContact(contactId);
+    if (!data) {
+      throw HttpError(404, `Contact with ${contactId} not found`);
+    }
+    res.status(200).json({
+      message: 'Contact deleted',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateOneContact = async (req, res, next) => {
+  try {
+    const { error } = addSchema.validate(req.body);
+    if (error) {
+      throw HttpError(400, error.message);
+    }
+    const { contactId } = req.params;
+    const data = await updateContact(contactId, req.body);
+    if (!data) {
+      throw HttpError(404, `Contact with ${contactId} not found`);
+    }
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  getAllContacts,
+  getIdContact,
+  addOneContact,
+  removeOneContact,
+  updateOneContact,
+};
