@@ -1,5 +1,4 @@
-const Joi = require('joi');
-
+const { HttpError } = require('../models/helpers');
 const { ctrlWrapper } = require('../utils');
 
 const {
@@ -9,23 +8,6 @@ const {
   addContact,
   updateContact,
 } = require('../models/contacts');
-
-const { HttpError } = require('../models/helpers');
-
-const addSchema = Joi.object({
-  name: Joi.string().required().messages({
-    'any.required': `"name" is required`,
-  }),
-  email: Joi.string().required().messages({
-    'any.required': `"email" is required`,
-    'string.empty': `"email" cannot be empty`,
-    'string.base': `"email" must be string`,
-  }),
-  phone: Joi.string().required().messages({
-    'any.required': `"phone" is required`,
-  }),
-  // Joi.string().pattern(//)
-});
 
 const getAllContacts = async (req, res) => {
   const data = await getContacts();
@@ -42,10 +24,6 @@ const getIdContact = async (req, res) => {
 };
 
 const addOneContact = async (req, res) => {
-  const { error } = addSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
-  }
   const data = await addContact(req.body);
   res.status(201).json(data);
 };
@@ -62,10 +40,6 @@ const removeOneContact = async (req, res) => {
 };
 
 const updateOneContact = async (req, res) => {
-  const { error } = addSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
-  }
   const { contactId } = req.params;
   const data = await updateContact(contactId, req.body);
   if (!data) {
