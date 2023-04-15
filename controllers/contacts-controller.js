@@ -1,6 +1,7 @@
 const { HttpError } = require('../models/helpers');
 const { ctrlWrapper } = require('../utils');
 
+const {Contact} = require("../models/contact")
 const {
   getContacts,
   getContactById,
@@ -10,7 +11,9 @@ const {
 } = require('../models/contacts');
 
 const getAllContacts = async (req, res) => {
-  const data = await getContacts();
+  console.log("FIND")
+  const data = await Contact.find({});
+  console.log(data)
   res.json(data);
 };
 
