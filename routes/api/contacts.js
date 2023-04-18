@@ -12,6 +12,12 @@ router.get('/:contactId', ctrl.getIdContact);
 
 router.post('/', validateBody(shemas.addSchema), ctrl.addOneContact);
 
+router.patch(
+  '/:contactId/favorite',
+  validateBody(shemas.favoriteSchema),
+  ctrl.updateFavoriteContact
+);
+
 router.delete('/:contactId', ctrl.removeOneContact);
 
 router.put(
