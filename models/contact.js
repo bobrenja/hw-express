@@ -1,11 +1,25 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
+const { handleMongooseError } = require('../utils');
 
 const contactSchema = new Schema({
-  name: { type: String, required: [true, 'title must be exist'] },
-  email: { type: String, required: true },
-  phone: { type: String, required: true },
+  name: {
+    type: String,
+    required: [true, 'Set name for contact'],
+  },
+  email: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+contactSchema.post('save', handleMongooseError);
 
 const addSchema = Joi.object({
   name: Joi.string().required().messages({
