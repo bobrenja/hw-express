@@ -4,9 +4,12 @@ const { ctrlWrapper } = require('../utils');
 const { Contact } = require('../models/contact');
 
 const getAllContacts = async (req, res) => {
-  console.log('FIND');
-  const data = await Contact.find({}, '-__v');
-  console.log(data);
+  const { _id: owner } = req.user;
+
+  const data = await Contact.find({ owner }, '-__v').populate(
+    'owner',
+    'name email'
+  );
   res.json(data);
 };
 
@@ -20,7 +23,9 @@ const getIdContact = async (req, res) => {
 };
 
 const addOneContact = async (req, res) => {
-  const data = await Contact.create(req.body);
+  console.log(req.user);
+  const { _id: owner } = req.user;
+  const data = await Contact.create({ ...req.body, owner });
   res.status(201).json(data);
 };
 

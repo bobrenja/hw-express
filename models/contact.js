@@ -18,6 +18,11 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      require: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -36,10 +41,12 @@ const addSchema = Joi.object({
   phone: Joi.string().required().messages({
     'any.required': `"phone" is required`,
   }),
+  favorite: Joi.boolean(),
+
   // Joi.string().pattern(//)
 });
 
-favoriteSchema = Joi.object({
+const favoriteSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
 
