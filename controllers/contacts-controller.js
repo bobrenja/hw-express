@@ -5,11 +5,12 @@ const { Contact } = require('../models/contact');
 
 const getAllContacts = async (req, res) => {
   const { _id: owner } = req.user;
-
-  const data = await Contact.find({ owner }, '-__v').populate(
-    'owner',
-    'name email'
-  );
+  const { page = 1, limit = 10 } = req.query;
+  const skip  = (page-1)*limit;
+  const data = await Contact.find({ owner }, '-__v', {
+    skip,
+    limit,
+  }).populate('owner', 'name email');
   res.json(data);
 };
 
