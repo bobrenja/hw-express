@@ -20,6 +20,25 @@ const register = async (req, res) => {
   });
 };
 
+const login = async (req, res) => {
+    console.log("LOGIN")
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw HttpError(401, 'E-mail or user invalid');
+  }
+
+  const passwCompare = bcrypt.compare(password, user.password);
+  if (!passwCompare) {
+    throw HttpError(401, 'E-mail or user invalid');
+  }
+
+  const token = "122.33d.455";
+  res.json({token});
+
+};
+
 module.exports = {
   register: ctrlWrapper(register),
+  login: ctrlWrapper(login),
 };

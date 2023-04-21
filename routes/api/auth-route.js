@@ -12,4 +12,6 @@ routes.post(
   ctrl.register
 );
 
+routes.post('/login', validateBody(shemasUser.loginShemaBody), ctrl.login);
+
 module.exports = routes;
