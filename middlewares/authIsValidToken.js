@@ -12,14 +12,17 @@ const authIsValidToken = async (req, res, next) => {
 
   if (bearer !== 'Bearer') {
     next(HttpError(401));
+    return;
   }
 
   try {
     const { id } = jwt.decode(token, SECRET_KEY);
     const user = await User.findById(id);
-    if (!user) {
+    if (!user || !user.token) {
       next(HttpError(401));
+      return;
     }
+
     req.user = user;
     next();
   } catch (error) {
